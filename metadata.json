@@ -1,0 +1,6 @@
+{
+  "name": "Sistema Umai Sushi",
+  "description": "Sistema profissional e rápido de comandas, mesas, lançamento de itens, pré-conta com impressão e financeiro para restaurantes de culinária japonesa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

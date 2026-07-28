@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+@layer utilities {
+  /* Hide standard scrollbars for a cleaner app look */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+}
+
+/* Print CSS Styles for professional thermal output */
+@media print {
+  @page {
+    size: 80mm auto;
+    margin: 0 !important;
+  }
+  
+  html, body {
+    width: 80mm !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide regular page elements */
+  header, footer, main, select, input, button, #open-table-modal, #checkout-modal, #transfer-modal {
+    display: none !important;
+  }
+
+  /* Clear out default layouts of parent elements */
+  body > *:not(#receipt-modal) {
+    display: none !important;
+  }
+
+  #receipt-modal {
+    display: block !important;
+    position: relative !important;
+    width: 80mm !important;
+    max-width: 80mm !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    border: none !important;
+    transform: none !important;
+    inset: auto !important;
+  }
+
+  /* motion.div / nested layout */
+  #receipt-modal > div {
+    display: block !important;
+    position: relative !important;
+    width: 80mm !important;
+    max-width: 80mm !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Hide receipt action buttons/headers during print */
+  .shrink-0, 
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Scroll container backdrop reset */
+  .flex-1.overflow-y-auto {
+    display: block !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Perfect standard 80mm receipt width */
+  #thermal-receipt-paper {
+    display: block !important;
+    position: relative !important;
+    width: 80mm !important;
+    max-width: 80mm !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 4mm 4mm 2mm 4mm !important; /* Perfect boundaries with zero bottom waste */
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: inherit !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Force elements to render black text */
+  #thermal-receipt-paper, 
+  #thermal-receipt-paper span, 
+  #thermal-receipt-paper p, 
+  #thermal-receipt-paper div {
+    color: #000000 !important;
+    background: #ffffff !important;
+  }
+}
+

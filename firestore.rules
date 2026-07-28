@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidPrinterConfig(data) {
+      return data.keys().hasAll(['id', 'role', 'name', 'connectionType', 'targetPrinterName'])
+        && data.id is string && data.id.size() <= 128
+        && data.role is string && data.role.size() <= 50
+        && data.name is string && data.name.size() <= 100
+        && data.connectionType in ['printnode', 'qz-tray', 'browser']
+        && data.targetPrinterName is string && data.targetPrinterName.size() <= 100
+        && (!('isEnabled' in data) || data.isEnabled is bool)
+        && (!('status' in data) || (data.status is string && data.status.size() <= 100));
+    }
+
+    function isValidPrintJob(data) {
+      return data.keys().hasAll(['id', 'printerId', 'printerName', 'connectionType', 'status', 'timestamp', 'retryCount'])
+        && data.id is string && data.id.size() <= 128
+        && data.printerId is string && data.printerId.size() <= 128
+        && data.printerName is string && data.printerName.size() <= 100
+        && data.connectionType in ['printnode', 'qz-tray', 'browser']
+        && data.status in ['pending', 'processing', 'completed', 'failed']
+        && data.timestamp is string && data.timestamp.size() <= 50
+        && data.retryCount is number
+        && (!('htmlContent' in data) || (data.htmlContent is string && data.htmlContent.size() <= 500000))
+        && (!('errorDetail' in data) || (data.errorDetail is string && data.errorDetail.size() <= 1000));
+    }
+
+    match /restaurants/{restaurantId} {
+      match /printers/{printerId} {
+        allow read: if isSignedIn() && restaurantId == request.auth.uid;
+        allow create: if isSignedIn() && restaurantId == request.auth.uid && isValidId(printerId) && isValidPrinterConfig(incoming());
+        allow update: if isSignedIn() && restaurantId == request.auth.uid && isValidId(printerId) && isValidPrinterConfig(incoming());
+        allow delete: if isSignedIn() && restaurantId == request.auth.uid && isValidId(printerId);
+      }
+      
+      match /printJobs/{jobId} {
+        allow read: if isSignedIn() && restaurantId == request.auth.uid;
+        allow create: if isSignedIn() && restaurantId == request.auth.uid && isValidId(jobId) && isValidPrintJob(incoming());
+        allow update: if isSignedIn() && restaurantId == request.auth.uid && isValidId(jobId) && isValidPrintJob(incoming());
+        allow delete: if isSignedIn() && restaurantId == request.auth.uid && isValidId(jobId);
+      }
+    }
+  }
+}

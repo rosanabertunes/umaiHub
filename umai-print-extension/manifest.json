@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Umai Sushi - Extensor de Impressão Direta",
+  "version": "1.0.0",
+  "description": "Permite impressão térmica direta e instantânea de cupons no Chrome, contornando sandboxes de iframes.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ]
+}
