@@ -1,12 +1,7 @@
 node_modules/
-build/
 dist/
-coverage/
-.DS_Store
 *.log
 .env*
-!.env.example
 service-account*.json
 *credentials*.json
 *.key.json
-

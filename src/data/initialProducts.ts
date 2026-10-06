@@ -59,3 +59,5 @@ export const INITIAL_PRODUCTS: Product[] = [
   { id: 'so1', code: '601', name: 'Harumaki de Doce de Leite (1 un.)', price: 6.00, category: 'Sobremesas' },
   { id: 'so2', code: '602', name: 'Harumaki de Beijinho (1 un.)', price: 6.00, category: 'Sobremesas' }
 ];
+
+export const initialProducts = INITIAL_PRODUCTS;

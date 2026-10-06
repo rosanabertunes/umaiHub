@@ -2,47 +2,54 @@ export interface Product {
   id: string;
   name: string;
   price: number;
-  category: string; // Dynamic Category Name
-  code: string; // Fast code for typing, e.g. "101"
-  description?: string; // Optional description
-  imageUrl?: string; // Optional product image URL
-  isActive?: boolean; // Active or Inactive status, default true
+  category: string;
+  code: string;
+  description?: string;
+  imageUrl?: string;
+  isActive?: boolean;
 }
 
-export type Category = string;
+export type OrderType = 'mesa' | 'delivery' | 'retirada' | 'balcao';
 
 export interface OrderItem {
   id: string;
   productId: string;
+  code?: string;
   name: string;
-  price: number;
+  price: number; // In rodizio mode, included sushi/dishes have price 0
   quantity: number;
   notes?: string;
-  createdAt: string; // Timestamp
+  category?: string;
+  createdAt: string;
+  printedToKitchen?: boolean;
+  isRodizioItem?: boolean;
 }
 
-export type TableStatus = 'Livre' | 'Ocupada' | 'Reservada';
-
-export interface Table {
-  id: number; // Table number, e.g., 1, 2, 3...
-  status: TableStatus;
-  items: OrderItem[];
-  waiterName?: string;
-  clientCount?: number;
-  openedAt?: string;
-  hasServiceCharge?: boolean;
-}
-
-export type PaymentMethod = 'PIX' | 'Dinheiro' | 'Cartão de Crédito' | 'Cartão de Débito';
-
-export interface SaleRecord {
+export interface Order {
   id: string;
-  tableId: number;
-  closedAt: string;
+  code: string; // e.g., "Mesa 01", "Comanda 15", "Delivery Lucas", "Balcão"
+  type: OrderType;
+  customerName?: string;
+  status: 'aberta' | 'fechada';
   items: OrderItem[];
-  subtotal: number;
+  isRodizio: boolean;
+  adultsCount: number; // Quantidade de Adultos
+  childrenCount: number; // Quantidade de Crianças
+  adultPrice: number; // R$ 85,00 padrão
+  adultPixPrice: number; // R$ 79,90 no PIX
+  childPrice: number; // R$ 42,50 padrão
+  childPixPrice: number; // R$ 39,90 no PIX
+  hasServiceCharge: boolean; // 10%
   discount: number;
-  total: number;
-  clientCount: number;
-  paymentMethod: PaymentMethod;
+  openedAt: string;
+  closedAt?: string;
+  paymentMethod?: string;
+  waiterName?: string;
+}
+
+export interface PrintOptions {
+  title?: string;
+  footer?: string;
+  isKitchen?: boolean;
+  cutPaper?: boolean;
 }

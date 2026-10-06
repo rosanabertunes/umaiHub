@@ -1,0 +1,12 @@
+{
+  "printerName": "EPSON TM-T20X Receipt",
+  "paperWidth": 48,
+  "autoCut": true,
+  "debug": true,
+  "restaurantId": "umai-sushi",
+  "printerRole": "TODOS",
+  "printerRoles": ["CAIXA", "COZINHA", "SUSHIBAR"],
+  "firestoreDatabaseId": "ai-studio-0e2830d4-527a-49d2-a0f7-899d71a25e1c",
+  "pollingOrListener": true,
+  "serviceAccountPath": "service-account.json"
+}

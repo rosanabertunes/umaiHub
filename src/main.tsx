@@ -1,8 +1,8 @@
-import {StrictMode} from 'react';
-import {createRoot} from 'react-dom/client';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
-import { testConnection } from './firebase.ts';
+import { testConnection } from './lib/firebase.ts';
 
 testConnection();
 

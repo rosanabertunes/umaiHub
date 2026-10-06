@@ -1,0 +1,24 @@
+{
+  "name": "umai-sushi-print-agent",
+  "version": "1.0.0",
+  "description": "Agente Local de Impressão ESC/POS RAW para Windows Spooler e Epson TM-T20X",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node dist/index.js",
+    "diagnostico": "tsc && node dist/diagnostico.js",
+    "test-print": "tsc && node dist/test-print.js",
+    "list-printers": "tsc && node dist/list-printers.js",
+    "select-printer": "tsc && node dist/select-printer.js",
+    "test-firestore-job": "tsc && node dist/create-test-job.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.19",
+    "typescript": "^5.8.2"
+  }
+}

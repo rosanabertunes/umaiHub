@@ -25,17 +25,16 @@
       "type": "object",
       "properties": {
         "id": { "type": "string" },
-        "printerId": { "type": "string" },
+        "printerRole": { "type": "string" },
         "printerName": { "type": "string" },
-        "connectionType": { "type": "string", "enum": ["printnode", "qz-tray", "browser"] },
-        "contentData": { "type": "object" },
-        "htmlContent": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
         "status": { "type": "string", "enum": ["pending", "processing", "completed", "failed"] },
         "errorDetail": { "type": "string" },
         "timestamp": { "type": "string" },
         "retryCount": { "type": "number" }
       },
-      "required": ["id", "printerId", "printerName", "connectionType", "status", "timestamp", "retryCount"]
+      "required": ["id", "printerRole", "printerName", "title", "content", "status", "timestamp", "retryCount"]
     }
   },
   "firestore": {

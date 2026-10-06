@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dossiê Técnico — Umai Sushi Print Agent</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #38bdf8;
+      --accent: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --code-bg: #090d16;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 24px 16px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    h1 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background-color: rgba(56, 189, 248, 0.2);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .btn-copy {
+      background-color: var(--primary);
+      color: #000;
+      font-weight: 600;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.2s;
+    }
+    .btn-copy:hover {
+      opacity: 0.9;
+    }
+    .card {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    p, li {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    ul {
+      list-style-position: inside;
+      margin-bottom: 12px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    strong {
+      color: var(--text);
+    }
+    pre {
+      background-color: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      overflow-x: auto;
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      user-select: all;
+    }
+    .prompt-box {
+      border-left: 4px solid var(--primary);
+    }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--accent);
+      color: #000;
+      font-weight: 600;
+      padding: 12px 20px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      display: none;
+      animation: fadeIn 0.3s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div>
+      <span class="badge">PROMPT FORMATADO & DOSSIÊ</span>
+      <h1>Umai Sushi — Diagnóstico Print Agent & Firestore</h1>
+      <p>Envie o conteúdo abaixo para o ChatGPT resolver as pendências locais do Windows.</p>
+    </div>
+    <button class="btn-copy" onclick="copyFullPrompt()">
+      📋 Copiar Prompt para ChatGPT
+    </button>
+  </header>
+
+  <div class="card prompt-box">
+    <h2>💬 Prompt Completo para Copiar e Colar no ChatGPT</h2>
+    <p style="margin-bottom: 12px;">Clique no botão acima ou no bloco abaixo para copiar todo o texto formatado:</p>
+    <pre id="promptText">Olá ChatGPT! Estou desenvolvendo o sistema de automação e PDV para o restaurante "Umai Sushi", com um Print Agent local em Node.js (Windows) responsável por imprimir cupons automaticamente em uma impressora térmica EPSON TM-T20X Receipt.
+
+Preciso da sua ajuda técnica para analisar o que já foi feito, apontar riscos e me entregar os scripts finais para validação.
+
+======================================================================
+1. HARDWARE E AMBIENTE LOCAL (WINDOWS)
+======================================================================
+- Sistema Operacional: Windows 10/11 (PC Desktop / Notebook HP).
+- Node.js instalado: v24.21.0
+- Impressora física instalada no Windows: "EPSON TM-T20X Receipt"
+- Porta: USB001 (Porta virtual USB do Windows)
+- Comandos: ESC/POS binário (RAW) com guilhotina (corte de papel)
+- Mecanismo de impressão validado:
+  Chamada da API nativa winspool.drv via P/Invoke:
+  OpenPrinterA -> StartDocPrinterA (pDataType = "RAW") -> StartPagePrinter -> WritePrinter -> EndPagePrinter -> EndDocPrinter -> ClosePrinter.
+
+======================================================================
+2. ESTRUTURA DO PRINT AGENT (/print-agent)
+======================================================================
+Localizado em: C:\Users\user\Desktop\print-agent
+
+A. config.json:
+{
+  "printerName": "EPSON TM-T20X Receipt",
+  "paperWidth": 48,
+  "autoCut": true,
+  "debug": true,
+  "restaurantId": "umai-sushi",
+  "printerRole": "CAIXA",
+  "pollingOrListener": true,
+  "serviceAccountPath": "service-account.json"
+}
+
+B. src/types.ts:
+- PrintJobStatus: "pending" | "processing" | "completed" | "failed"
+- PrinterRole: "SUSHIBAR" | "COZINHA" | "CAIXA"
+- PrintJob: id, restaurantId, printerRole, status, content, createdAt, processingAt, completedAt, failedAt, retryCount, errorMessage
+
+C. src/firebase.ts:
+- Firebase Admin SDK (firebase-admin) v13.x
+- Inicialização segura singleton via GOOGLE_APPLICATION_CREDENTIALS ou service-account.json local
+- Firestore Database ID configurado: "ai-studio-0e2830d4-527a-49d2-a0f7-899d71a25e1c"
+
+D. src/escpos.ts:
+- Converte o PrintJob em Buffer binário ESC/POS (48 colunas, cabeçalho, itens, comando de corte GS V \x42 \x00)
+
+E. src/firestore-print-listener.ts:
+- Listener em tempo real com onSnapshot na coleção:
+  /restaurants/{restaurantId}/printJobs
+- Filtros: status == "pending" && printerRole == config.printerRole
+- Ordem: createdAt ASC
+- Claim atômico via db.runTransaction() (muda de pending para processing)
+- Fila sequencial local FIFO (1 job por vez)
+- Se spooler aceitar: status = "completed" + completedAt
+- Se spooler falhar: status = "failed" + retryCount + 1 + errorMessage
+
+F. src/create-test-job.ts:
+- Script que adiciona 1 job pendente de teste no Firestore
+
+======================================================================
+3. OS PROBLEMAS QUE OCORRERAM NOS TESTES LOCAIS DO WINDOWS
+======================================================================
+1. No PowerShell antigo (5.1 padrão do Windows), operadores como "||" causam erro de sintaxe:
+   "O token '||' não é um separador de instruções válido nesta versão".
+2. O PowerShell falhou ao compilar scripts longos C# em tempo de execução quando passados com aspas quebradas ou caracteres de nova linha (@" ... "@).
+3. Ao salvar scripts no Bloco de Notas, o Windows renomeou arquivos para ".txt" (ex: direct-test.cjs.txt), causando MODULE_NOT_FOUND no Node.js.
+4. Para o Firebase Admin funcionar, é obrigatório ter o arquivo "service-account.json" dentro de print-agent/.
+5. O Firestore precisa de um Índice Composto (Composite Index) para a query:
+   Coleção: restaurants/{restaurantId}/printJobs
+   Campos:
+   - status (Ascending)
+   - printerRole (Ascending)
+   - createdAt (Ascending)
+
+======================================================================
+4. O QUE VOCÊ (CHATGPT) PRECISA ME ENTREGAR AGORA:
+======================================================================
+Por favor, responda com clareza e objetividade:
+
+1. UM SCRIPT .BAT INFALÍVEL OU COMANDO ÚNICO DE POWERSHELL para eu rodar no Windows 10/11 que faça a Epson TM-T20X Receipt imprimir um teste físico AGORA sem erro de sintaxe, sem ||, e sem depender de caminhos errados.
+2. O PASSO A PASSO EXATO de como baixar e onde colar o arquivo "service-account.json" do Firebase para o print-agent autenticar no Firestore sem erros.
+3. Se a query do Firestore exigir o índice composto, como criar esse índice no Console do Firebase em 1 clique.
+4. Análise do fluxo FIFO e claim atômico: a lógica de transação implementada tem algum risco de deadlock ou conflito de concorrência com múltiplos agentes?</pre>
+  </div>
+
+  <div class="card">
+    <h2>📌 Resumo das 4 Perguntas Chave</h2>
+    <ul>
+      <li><strong>1. Teste Físico Imediato:</strong> Um comando PowerShell nativo e limpo para descarregar o buffer na porta <code>USB001</code> sem erros de aspas ou separadores inválidos.</li>
+      <li><strong>2. Autenticação Firebase:</strong> Como obter a chave de serviço (Service Account) no Console do Firebase e salvar na pasta <code>print-agent</code>.</li>
+      <li><strong>3. Índice Composto:</strong> Como ativar o índice do Firestore para que a query de busca ordenada não seja bloqueada.</li>
+      <li><strong>4. Concorrência:</strong> Confirmação de segurança da transação atômica que reserva os pedidos pendentes.</li>
+    </ul>
+  </div>
+</div>
+
+<div id="toast" class="toast">Texto copiado para a área de transferência!</div>
+
+<script>
+  function copyFullPrompt() {
+    const text = document.getElementById('promptText').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const toast = document.getElementById('toast');
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
+    });
+  }
+</script>
+
+</body>
+</html>
